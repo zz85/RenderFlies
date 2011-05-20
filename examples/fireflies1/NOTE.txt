@@ -1,0 +1,10 @@
+This is the 1st experiment creating a proof of concept of a distributed html5 web based rendering system. Images are rendered using canvas images and upload via ajax to node.js
+
+While this experiment uses no optimizations, and the server being a "dumb" upload receiver, it is a true distributed rendering system. However, this basic setup allows serves as a benchmark to other techniques, eg.
++ node-canvas
++ async operations
++ queuing system
++ buffering
++ web sockets
+
+To run, run node.js on renderhive.js
