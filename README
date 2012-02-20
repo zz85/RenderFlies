@@ -1,4 +1,5 @@
 RenderFlies is a proof of concept browser based distributed video render system.
+
 It runs with javascript in web browsers and node.js
 
 Examples of videos rendered
@@ -6,4 +7,7 @@ http://vimeo.com/23604189
 http://vimeo.com/23603916
 http://vimeo.com/23585757
 
-For comments, contact Joshua Koo zz85nus@gmail.com
+Check out examples in the examples directory.
+
+Also check out the Renderflies integration with FractalLabs https://github.com/zz85/FractalLab
+Joshua Koo zz85nus@gmail.com http://www.lab4games.net/zz85/blog
