@@ -9,6 +9,8 @@ var util = require('util'),
 
 var path = require('path');
 
+var io = require('socket.io').listen(app);
+
 // app.configure(function(){
 // 	// Sets the root directory
 //     var dir =  __dirname + '/..';
@@ -36,10 +38,107 @@ app.post('*', function(req, res) {
 	console.log('receive');
 	
 	console.log(req.body);
+	res.end();
 });
 
 // Start the server listening on port 8000
 app.listen(8000);
+
+
+var minecraftcubes = new RenderProject();
+
+
+var k_UNALLOCATED = 1,
+	k_ALLOCATED = 2,
+	k_RENDERED = 3;
+
+// Use a hashmap here to keep track of statuses of frames to render
+var renders = [];
+// First mark project render frames to unallocated
+for (var i=0, il=minecraftcubes.frames;i<=il;i++) {
+    renders[i] = k_UNALLOCATED;
+}
+
+// Display stats of rendered frames
+function checkRenderStatus() {
+    var unalloc = 0,
+	alloc = 0,
+	rendered = 0,
+	c= 0;
+    for (var r in renders) {
+        c++;
+        switch(renders[r]) {
+            case k_UNALLOCATED:
+                unalloc ++;
+                break;
+            case k_ALLOCATED:
+                alloc ++;
+                break;
+            case k_RENDERED:
+                rendered ++;
+                break;
+        }
+    }
+    
+    console.log("Unallocated, Allocated, Rendered, Total", unalloc, alloc, rendered, c);
+    return {unalloc:unalloc, alloc:alloc, rendered:rendered, c:c};
+}
+
+// Return the next unallocated frame to be rendered
+function getNextRenderFrame() {
+    for (var r in renders) {
+        if (renders[r] && renders[r]==k_UNALLOCATED) {
+			renders[r] = k_ALLOCATED;
+            return r;
+        }
+    }
+    return null;
+}
+
+
+
+
+
+io.sockets.on('connection', function (socket) {
+  // socket.emit('news', { hello: 'world' });
+  // socket.on('my other event', function (data) {
+  // 	
+  //   console.log('other event', data);
+  // });
+
+  // io.sockets.emit('this', { will: 'be received by everyone'});
+
+// io.sockets.emit('project', minecraftcubes);
+
+// socket.on('project', function (from, msg) {
+//   console.log('I received a private message by ', from, ' saying ', msg);
+// });
+
+	socket.emit('project', minecraftcubes);
+	socket.on('ready', function () {
+		// find available frame
+		
+		var frame = getNextRenderFrame();
+		console.log('client ready', socket, 'sending frame', frame);
+		if (frame!=null)
+		socket.emit('render', frame);
+	});
+	
+	socket.on('render', function (frame, output) {
+		// console.log('receiving render..', frame, output);
+		
+		var frame = getNextRenderFrame();
+		if (frame!=null)
+		socket.emit('render', frame);
+	});
+
+
+  // socket.on('disconnect', function () {
+  //   io.sockets.emit('user disconnected');
+  // });
+
+
+});
 
 // Project Settings
 function RenderProject(options) {
@@ -59,11 +158,16 @@ function RenderProject(options) {
 	if (!this.renders) this.renders = '_renders';
 	if (!this.assets) this.assets = '_assets';
 	
+	
+	this.duration = 67;
 	// Random Id / Key?
 	this.frames = this.fps * this.duration;
 
 	
 };
+
+
+
 
 
 /*
@@ -79,5 +183,3 @@ var project01 = {
     width: 720
 };
 */
-
-var minecraftcubes = new RenderProject();
