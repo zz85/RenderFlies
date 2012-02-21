@@ -1,12 +1,12 @@
 <body>
-	
+	<script src="/socket.io/socket.io.js"></script>
 	<style>
 	.a {
 		display:block;
 		width: 6px;
 		height: 6px;
 		margin: 1px;
-		background-color: red;
+		background-color: yellow;
 		float:left;
 	}
 	
@@ -15,7 +15,7 @@
 		width: 6px;
 		height: 6px;
 		margin: 1px;
-		background-color: yellow;
+		background-color: red;
 		float:left;
 	}
 	
@@ -41,6 +41,8 @@
 	
 	
 	<script>
+	
+
 		var s = document.getElementById('status');
 		var d = document.getElementById('description');
 		
@@ -48,15 +50,28 @@
 			d.innerHTML = a.target.id;
 		}
 		
-		for (var i=0;i<1000;i++) {
-			var t = document.createElement('div');
-			t.className = 'a';
-			t.id = i;
-			t.onmouseover = check;
-			// t.setAttribute('title', 'testing');
-			// console.log(t);
-			s.appendChild(t);
-		}
+		var socket = io.connect(window.location.origin);
+		socket.on('project', function(data) {
+			console.log('getting data for project', data);
+			project = data;
+			
+			for (var i=0;i<project.frames;i++) {
+				var t = document.createElement('div');
+				t.className = 'a';
+				t.id = i;
+				t.onmouseover = check;
+				// t.setAttribute('title', 'testing');
+				// console.log(t);
+				s.appendChild(t);
+			}
+		});
+
+		socket.on('renderstatus', function(frame, status) {
+			// console.log('renderstatus', frame, status);
+			document.getElementById(frame).className = '_abc'[status];
+		});
+		
+		
 	</script>
 	
 </body>
