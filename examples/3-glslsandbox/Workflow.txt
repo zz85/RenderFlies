@@ -1,0 +1,23 @@
+
+1. Make App Run runtime / WEBGL manner
+
+
+
+2. Extract Keyframing information.
+
+eg audio.
+
+
+
+3. Create Project Details.
+
+eg. width, height, fps, audio, 
+
+try non Base64.
+
+
+
+
+~~~~
+RenderHive == Server
+

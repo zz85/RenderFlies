@@ -1,0 +1,44 @@
+<body>
+	
+	<style>
+	.a {
+		display:block;
+		width: 6px;
+		height: 6px;
+		margin: 1px;
+		background-color: red;
+		float:left;
+	}
+	
+	#status {
+		
+	}
+	</style>
+	
+	<div id="description">
+	</div>
+	
+	<div id="status">
+	</div>
+	
+	
+	<script>
+		var s = document.getElementById('status');
+		var d = document.getElementById('description');
+		
+		function check(a) {
+			d.innerHTML = a.target.id;
+		}
+		
+		for (var i=0;i<1000;i++) {
+			var t = document.createElement('div');
+			t.className = 'a';
+			t.id = i;
+			t.onmouseover = check;
+			// t.setAttribute('title', 'testing');
+			// console.log(t);
+			s.appendChild(t);
+		}
+	</script>
+	
+</body>
