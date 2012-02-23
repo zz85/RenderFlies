@@ -1,23 +1,69 @@
+Generic Workflow Integration with JS Canvas App.
 
-1. Make App Run runtime / WEBGL manner
+1. Make App Runable with Canvas / WEBGL
 
+2. Extract and Bake Keyframing information.
 
-
-2. Extract Keyframing information.
-
-eg audio.
-
-
+ - Shader information
+ - Scene render data
+ - audio.
+ - mouse data
 
 3. Create Project Details.
 
-eg. width, height, fps, audio, 
+	eg. width, height, fps, audio, directory, names
 
-try non Base64.
+4. Run RenderHive == Server
+
+5. Run RunderFlies == "Slaves"
+
+~~~~
+
+Workflow for GLSL Sandbox integration with Renderflies
+
+
+(Building Project)
+1. Make shader work in GLSL sandbox
+
+2. Select audio for use, run to check if visualizations works, then bake audio levels
+3. Select duration for render length, then record and bake mouse coordinates
+
+4. Save shader, and baked mouse coordinates and audio levels
+
+(Hosting Project)
+5. Place settings in Renderflies
+
+6. Run renderflies
+
+(Running Project)
+7. Run client, connects to renderHive for jobs. (Select to pick project?)
+
+8. Run Status Monitor
+
+TOOD.
+Management of upload projects.
+
+
+Monitor
+	Display All status.
+	Force Encode.
+	View Projects
+	
+Server
+	On client D/C, reallocate frame.
+	- Keep clients [], with running job.
+	- Persist project status?
+
 
 
 
 
 ~~~~
-RenderHive == Server
+
+Orbital project
+
+1. Run readonly copy with flash
+2. Run readonly project view
+
+3. Host in MunirPlace?
 

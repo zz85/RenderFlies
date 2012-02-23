@@ -161,6 +161,8 @@ void main( void ) {
 			
 			var times = [];
 			var levels = [];
+			var mouseX = [];
+			var mouseY = [];
 			
 
 			init();
@@ -213,7 +215,7 @@ void main( void ) {
 				
 
 				var music = [
-					'music/01 The Beginning.m4a',
+					'music/01TheBeginning.m4a',
 					'music/02 The Beach.ogg',
 					'music/03 The Cave.ogg',
 					'music/04 Jakobson.ogg',
@@ -726,6 +728,103 @@ void main( void ) {
 			}
 			
 			var done;
+			
+			
+			function bakeData() {
+				
+				var fps = 25;
+				var totalFrames = fps * 77;
+				var t;
+				
+				var audioresults = [], mouseXs = [], mouseYs = [];
+				for (var i=0;i<totalFrames;i++) {
+					t = i/fps;
+					result = getLevelsWith(t, levels);
+					audioresults.push(result)
+
+					mouseXs.push(getLevelsWith(t, mouseX));
+					mouseYs.push(getLevelsWith(t, mouseY));
+				}
+				
+				
+				
+				// getLevelsWith
+
+				console.log('results', audioresults, mouseXs, mouseYs);
+
+
+				function findTime(targetTime) {
+					// binary search for the index with largest value smaller than target u distance
+					var i ;
+					var il = times.length;
+					var low = 0, high = il - 1, comparison;
+
+
+					while ( low <= high ) {
+
+						i = Math.floor( low + ( high - low ) / 2 ); // less likely to overflow, though probably not issue here, JS doesn't really have integers, all numbers are floats
+
+					  	comparison = times[ i ] - targetTime;
+
+					  	if ( comparison < 0 ) {
+
+							low = i + 1;
+							continue;
+
+						} else if ( comparison > 0 ) {
+
+							high = i - 1;
+							continue;
+
+						} else {
+
+							high = i;
+							break;
+
+							// DONE
+
+						}
+
+					}
+
+
+					return high;
+					// console.log('high', high, low);
+
+
+				}
+
+
+				function getLevelsWith(targetTime, target) {
+					var index = findTime(targetTime);
+
+					if (index<0) {
+						return target[0];
+					}
+
+					var time1 = times[index];
+					var time2 = times[index + 1];
+
+					var level1 = target[index];
+					var level2 = target[index + 1];
+
+					if (targetTime == time1) {
+						return level1;
+					}
+					
+					// if (level2!==undefined) {
+					// 	return level1;
+					// }
+
+					var timeDiff = time2 - time1;
+					var lapsed =  targetTime - time1;
+					var levelDiff = level2 - level1;
+
+					return lapsed/timeDiff * levelDiff + level1;
+
+				}
+
+			}
 
 			function render() {
 
@@ -743,8 +842,10 @@ void main( void ) {
 				}
 				
 				if (!done) {
-				times.push(t);
-				levels.push(parameters.audio);
+					times.push(t);
+					levels.push(parameters.audio);
+					mouseX.push(parameters.mouseX);
+					mouseY.push(parameters.mouseY);
 				}
 
 				// Set uniforms for custom shader

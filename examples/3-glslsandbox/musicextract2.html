@@ -86,7 +86,30 @@ function getLevels(targetTime) {
 	
 	return lapsed/timeDiff * levelDiff + level1;
 	
+}
+
+function getLevelsWith(targetTime, target) {
+	var index = findTime(targetTime);
 	
+	if (index<0) {
+		return target[0];
+	}
+	
+	var time1 = data.times[index];
+	var time2 = data.times[index + 1];
+	
+	var level1 = target[index];
+	var level2 = target[index + 1];
+	
+	if (targetTime == time1) {
+		return level1;
+	}
+	
+	var timeDiff = time2 - time1;
+	var lapsed =  targetTime - time1;
+	var levelDiff = level2 - level1;
+	
+	return lapsed/timeDiff * levelDiff + level1;
 	
 }
 
