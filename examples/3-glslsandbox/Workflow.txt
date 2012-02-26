@@ -17,8 +17,7 @@ Generic Workflow Integration with JS Canvas App.
 
 5. Run RunderFlies == "Slaves"
 
-~~~~
-
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Workflow for GLSL Sandbox integration with Renderflies
 
 
@@ -54,18 +53,8 @@ Server
 	- Keep clients [], with running job.
 	- Persist project status?
 
-
-
-
-
 ~~~~
 
-Orbital project
-
-1. Run readonly copy with flash
-2. Run readonly project view
-
-3. Host in MunirPlace?
 
 ---
 TODO.
@@ -73,3 +62,11 @@ TODO.
 Monitor. - More details - blocked started by, time etc.
 
 Percentage complete, estimated time left...
+
+
+~~~~~~~~~~~
+1. create.html
+
+2. monitor.html
+
+3. run.html
