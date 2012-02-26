@@ -242,44 +242,6 @@ function setURL(){ };
 				rightside.appendChild( fullscreenButton );
 				
 
-				var music = [
-					'music/01 The Beginning.ogg',
-					'music/02 The Beach.ogg',
-					'music/03 The Cave.ogg',
-					'music/04 Jakobson.ogg',
-					'music/05 Esther.ogg',
-					'music/07 The Code.ogg'
-				];
-				
-				function playMusic(url) {
-					if (audiokeys && audiokeys.isPlaying) {
-						audiokeys.stop();
-					}
-					compileButton.textContent = 'Loading audio: ' + url + '...';
-					audiokeys = new AudioKeys(url);
-					if (audiokeys.dspPath) audiokeys.dspPath = 'audiokeys/' + audiokeys.dspPath;
-					
-					// adds  audio monitors
-					audiokeys.addWatchers(0, 256, 0, 1);
-					audiokeys.load(function() {
-						// When audio file is ready to play
-						audiokeys.play();
-					});
-				}
-				
-				// Add play button
-				playMusicButton = document.createElement( 'button' );
-				playMusicButton.textContent = 'Play Another!';
-				playMusicButton.addEventListener( 'click', function ( event ) {
-
-
-					var pick = Math.floor(Math.random()*music.length);
-					playMusic(music[pick]);
-
-				}, false );
-				// toolbar.appendChild( button );
-				rightside.appendChild( playMusicButton );
-
 				var button = document.createElement( 'a' );
 				button.textContent = 'gallery';
 				button.href = 'http://glsl.heroku.com/';
@@ -342,8 +304,6 @@ function setURL(){ };
 				// from helper.js
 				add_server_buttons();
 				
-				// playMusic(music[0]);
-
 				// Initialise WebGL
 
 				try {
