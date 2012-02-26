@@ -58,13 +58,13 @@
 
 		<script src="js/lzma.js"></script>
 		<script src='js/jquery.js'></script>
-		<script src='js/helpers.js'></script>
+
 		<script src="js/codemirror.js"></script>
 		<script src="js/glsl.js"></script>
 		<script src="audiokeys/AudioKeys.js"></script>
 		
 		<script src="/socket.io/socket.io.js"></script>
-		<script src="levels25.js"></script>
+		<script src="data5.js"></script>
 
 		<script id="example" type="x-shader/x-fragment">#ifdef GL_ES
 precision mediump float;
@@ -121,9 +121,20 @@ void main( void ) {
 
 		<script>
 
-			initialize_helper();
 
-			var compressor=initialize_compressor();
+// dummy functions for saveButton
+function set_save_button(visibility) {
+}
+
+function set_parent_button(visibility) {
+}
+
+function add_server_buttons() {
+}
+
+function load_url_code(){ };
+function setURL(){ };
+
 
 			if ( !window.requestAnimationFrame ) {
 
@@ -693,44 +704,7 @@ void main( void ) {
 
 			function onWindowResize( event ) {
 
-				var isMaxWidth = ((resizer.currentWidth === resizer.maxWidth) || (resizer.currentWidth === resizer.minWidth)),
-					isMaxHeight = ((resizer.currentHeight === resizer.maxHeight) || (resizer.currentHeight === resizer.minHeight));
-
-				toolbar.style.width = window.innerWidth - 47 + 'px';
-
-				resizer.isResizing = false;
-				resizer.maxWidth = window.innerWidth - 75;
-				resizer.maxHeight = window.innerHeight - 125;
-				if (isMaxWidth || (resizer.currentWidth > resizer.maxWidth)) {
-					resizer.currentWidth = resizer.maxWidth;
-				}
-				if (isMaxHeight || (resizer.currentHeight > resizer.maxHeight)) {
-					resizer.currentHeight = resizer.maxHeight;
-				}
-				if (resizer.currentWidth < resizer.minWidth) { resizer.currentWidth = resizer.minWidth; }
-				if (resizer.currentHeight < resizer.minHeight) { resizer.currentHeight = resizer.minHeight; }
-
-				code.getWrapperElement().style.top = '75px';
-				code.getWrapperElement().style.left = '25px';
-				code.getWrapperElement().style.width = resizer.currentWidth + 'px';
-				code.getWrapperElement().style.height = resizer.currentHeight + 'px';
-
-				canvas.width = window.innerWidth / quality;
-				canvas.height = window.innerHeight / quality;
-
-				canvas.style.width = window.innerWidth + 'px';
-				canvas.style.height = window.innerHeight + 'px';
-
-				parameters.screenWidth = canvas.width;
-				parameters.screenHeight = canvas.height;
-
-				if (gl) {
-				
-					gl.viewport( 0, 0, canvas.width, canvas.height );
-
-					createRenderTargets();
-					
-				}
+	
 			}
 
 			//
@@ -754,6 +728,7 @@ void main( void ) {
 				parameters.screenWidth = canvas.width = project.width;
 				parameters.screenHeight = canvas.height = project.height;
 				
+				canvas.style.display = 'none';
 				canvas.style.width = window.innerWidth + 'px';
 				canvas.style.height = window.innerHeight + 'px';
 
@@ -772,7 +747,10 @@ void main( void ) {
 			function renderAndUpload(frame) {
 				
 				parameters.time = frame / project.fps;
-				parameters.audio = audiolevels[frame];
+				//parameters.audio = audiolevels[frame];
+				parameters.audio = baked.audio[frame];
+				parameters.mouseX = baked.mouseX[frame];
+				parameters.mouseY = baked.mouseY[frame];
 				// console.log(parameters.audio);
 				render();
 				var output = canvas.toDataURL("image/png");

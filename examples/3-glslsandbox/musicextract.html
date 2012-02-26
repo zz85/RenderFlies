@@ -215,7 +215,7 @@ void main( void ) {
 				
 
 				var music = [
-					'music/01TheBeginning.m4a',
+					'music/02TheBeach.m4a',
 					'music/02 The Beach.ogg',
 					'music/03 The Cave.ogg',
 					'music/04 Jakobson.ogg',
@@ -728,12 +728,14 @@ void main( void ) {
 			}
 			
 			var done;
-			
+			var duration = 60*2 +4;
 			
 			function bakeData() {
 				
 				var fps = 25;
-				var totalFrames = fps * 77;
+				
+				console.log('duration', duration);
+				var totalFrames = fps * duration;
 				var t;
 				
 				var audioresults = [], mouseXs = [], mouseYs = [];
@@ -746,7 +748,7 @@ void main( void ) {
 					mouseYs.push(getLevelsWith(t, mouseY));
 				}
 				
-				
+				console.log(JSON.stringify({audio: audioresults, mouseX: mouseXs, mouseY: mouseYs}));
 				
 				// getLevelsWith
 
@@ -836,9 +838,11 @@ void main( void ) {
 				
 				
 				var t = parameters.time / 1000;
-				if (t>78) {
+				if (t>duration) {
 					done = true;
-					console.log('done');
+					compileButton.textContent = 'done ' + t;
+				} else {
+					compileButton.textContent = 'playing ' + t;
 				}
 				
 				if (!done) {

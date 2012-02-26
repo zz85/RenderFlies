@@ -53,6 +53,11 @@
 		var socket = io.connect(window.location.origin);
 		socket.on('project', function(data) {
 			console.log('getting data for project', data);
+			
+			while (s.hasChildNodes()) {
+				s.removeChild(s.lastChild);
+			}
+	
 			project = data;
 			
 			for (var i=0;i<project.frames;i++) {
