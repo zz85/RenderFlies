@@ -67,3 +67,9 @@ Orbital project
 
 3. Host in MunirPlace?
 
+---
+TODO.
+
+Monitor. - More details - blocked started by, time etc.
+
+Percentage complete, estimated time left...
